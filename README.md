@@ -14,7 +14,7 @@
 This is the project for the course of data modeling with PostgreSQL. 
 The course is designed to teach the fundamentals of data modeling with PostgreSQL. 
 The goal of the project is to construct a data model and ETL processes for a fictional company called 
-[**Sparkify**](https://www.udacity.com/).
+[**Sparkify**](https://www.udacity.com/) .
 
 ## Data Model
 The data model for Sparkify is as follows: 

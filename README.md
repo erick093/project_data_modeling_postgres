@@ -5,7 +5,6 @@
 2. [**Data Model**](#data-model)
 3. [**ETL Processes**](#etl-processes)
 4. [**Execution**](#execution)
-5. [**Conclusion**](#conclusion)
 6. [**References**](#references)
 7. [**Acknowledgements**](#acknowledgements)
 8. [**License**](#license)
@@ -86,6 +85,44 @@ Below is the data model for the Sparkify database.
     | user_agent       | varchar(255) | 
     +------------------+
  
+## SQL Queries
+The queries for the insertion of data are as follows:
+
+1. **Insert Songs**
+```sql
+INSERT INTO songs (song_id, title, artist_id, year, duration)
+VALUES (%s, %s, %s, %s, %s)
+```
+This query does not take into account insertion conflicts since there are no duplicates in the song dataset.
+2. **Insert Artists**
+```sql
+INSERT INTO artists (artist_id, name, location, latitude, longitude) VALUES (%s, %s, %s, %s, %s)
+ON CONFLICT (artist_id) DO UPDATE SET location = EXCLUDED.location, latitude = EXCLUDED.latitude, longitude = EXCLUDED.longitude
+```
+This query takes into account insertion conflicts since there are duplicates in the artist dataset.
+In the case of a conflict, the location and latitude and longitude columns are updated.
+
+3. **Insert Users**
+```sql
+INSERT INTO users (user_id, first_name, last_name, gender, level) VALUES (%s, %s, %s, %s, %s)
+ON CONFLICT (user_id) DO UPDATE SET level = EXCLUDED.level
+```
+This query considers the case when there are duplicate information about users in the logs file. 
+In the event of duplicates the level of user is updated, this to maintain the most updated level of user.
+
+4. **Insert Time**
+```sql
+INSERT INTO time (start_time, hour, day, week, month, year, weekday) VALUES (%s, %s, %s, %s, %s, %s, %s)
+ON CONFLICT (start_time) DO NOTHING
+```
+This query considers the case when there are duplicate information about time in the logs file. 
+In the event of duplicates the time is not inserted.
+
+5. **Insert Songplays**
+```sql
+INSERT INTO songplays (start_time, user_id, level, song_id, artist_id, session_id, location, user_agent) 
+VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+```
 
 ## ETL Processes
 The following are the ETL processes for the Sparkify database.
@@ -96,6 +133,7 @@ the user dimension table and the time dimension table.
    1. **Write the songplays fact table to the database**. 
    2. **Write the user dimension table to the database**. 
    3. **Write the time dimension table to the database**. 
+
 ## Execution
 The first step is to run the following command to create the database and the tables.
 
@@ -106,11 +144,6 @@ by executing the ETL pipeline.
 
     $ python etl.py
 
-## Conclusion
-This project is a good example of how to use the PostgreSQL database. 
-The data model is well-defined and easy to understand. 
-The ETL processes are well-defined and easy to understand. 
-The data model and ETL processes are well-defined and easy to understand.
 ## References
 * [PostgreSQL](https://www.postgresql.org/)
 * [Udacity Data Engineering Course](https://www.udacity.com/course/data-engineer-nanodegree--nd027)

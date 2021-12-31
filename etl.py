@@ -5,7 +5,7 @@ import pandas as pd
 from sql_queries import *
 
 
-def process_song_file(cur, filepath):
+def process_song_file(cur: object, filepath: str):
     """
     Process song file
     """
@@ -22,7 +22,7 @@ def process_song_file(cur, filepath):
     cur.execute(artist_table_insert, artist_data)
 
 
-def process_log_file(cur, filepath):
+def process_log_file(cur: object, filepath: str):
     """
     Process log file
     """
@@ -68,7 +68,7 @@ def process_log_file(cur, filepath):
         cur.execute(songplay_table_insert, songplay_data)
 
 
-def process_data(cur, conn, filepath, func):
+def process_data(cur: object, conn: object, filepath: str, func):
     """
     Process data
     """

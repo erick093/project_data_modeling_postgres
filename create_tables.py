@@ -11,8 +11,6 @@ def create_database():
     
     # connect to default database
     conn = psycopg2.connect("host=127.0.0.1 dbname=studentdb user=student password=student")
-    # conn = psycopg2.connect("host=azure-udacity-data.postgres.database.azure.com dbname=studentdb "
-    #                         "user=student@azure-udacity-data password=0okm)OKM$ port=5432 sslmode=require")
 
     conn.set_session(autocommit=True)
     cur = conn.cursor()
@@ -25,9 +23,8 @@ def create_database():
     conn.close()    
     
     # connect to sparkify database
-    # conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
-    conn = psycopg2.connect("host=azure-udacity-data.postgres.database.azure.com dbname=sparkifydb "
-                            "user=student@azure-udacity-data password=0okm)OKM$")
+    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
+
     cur = conn.cursor()
     
     return cur, conn

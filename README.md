@@ -91,9 +91,10 @@ The queries for the insertion of data are as follows:
 1. **Insert Songs**
 ```sql
 INSERT INTO songs (song_id, title, artist_id, year, duration)
-VALUES (%s, %s, %s, %s, %s)
+VALUES (%s, %s, %s, %s, %s) ON CONFLICT (song_id) DO NOTHING;
 ```
-This query does not take into account insertion conflicts since there are no duplicates in the song dataset.
+This query inserts the songs into the Songs table. It also checks if the song_id already exists in the table. 
+If it does, it does not insert the song.
 2. **Insert Artists**
 ```sql
 INSERT INTO artists (artist_id, name, location, latitude, longitude) VALUES (%s, %s, %s, %s, %s)
@@ -148,7 +149,7 @@ by executing the ETL pipeline.
 * [PostgreSQL](https://www.postgresql.org/)
 * [Udacity Data Engineering Course](https://www.udacity.com/course/data-engineer-nanodegree--nd027)
 
-## Acknoledgements
+## Acknowledgements
 This project is based on the Udacity Data Engineering Course.
 
 ## License
